@@ -3,7 +3,8 @@
 module for filtering loggers
 """
 import re
-
-def filter_datum(fields, redaction, message, separator):
-    pattern = '|'.join(map(re.escape, fields))
-    return re.sub(rf'({pattern})=[^\\{separator}]+', rf'\1={redaction}', message)
+patterns = {
+    'extract': lambda x, y: r'(?P<field>{})=[^{}]*'.format('|'.join(x), y),
+    'replace': lambda x: r'\g<field>={}'.format(x),
+}
+PII_FIELDS = ("name", "email", "phone", "ssn", "password")
