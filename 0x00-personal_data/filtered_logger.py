@@ -15,7 +15,16 @@ patterns = {
 PII_FIELDS = ("name", "email", "phone", "ssn", "password")
 
 def filter_datum(
-    fields: List[str], redaction: str, message: str, separator: str
-) -> str:
+        fields: List[str], redaction: str, message: str, separator: str) -> str:
     extract, replace = patterns["extract"], patterns["replace"]
     return re.sub(extract(fields, separator), replace(redaction), message)
+def get_logger() -> logging.Logger:
+    """new logger for user data.
+    """
+    logger = logging.getLogger("user_data")
+    stream_handler = logging.StreamHandler()
+    stream_handler.setFormatter(RedactingFormatter(PII_FIELDS))
+    logger.setLevel(logging.INFO)
+    logger.Propagate = False
+    logger.addHandler(stream_handler)
+    return logger
