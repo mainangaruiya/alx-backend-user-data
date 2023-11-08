@@ -1,4 +1,5 @@
 # Basic authentication
+![image](https://github.com/mainangaruiya/alx-backend-user-data/assets/100405059/2bbaccac-3eb0-4229-9744-ddced243d890)
 
 This project contains tasks for learning to authenticate a user using the Basic authentication scheme.
 
